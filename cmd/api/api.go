@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/PeppyS/black-api/internal"
 	businessDelivery "github.com/PeppyS/black-api/internal/business/delivery"
+	"github.com/PeppyS/black-api/internal/server"
 )
 
 func main() {
@@ -14,5 +14,6 @@ func main() {
 
 	bd := businessDelivery.NewBusinessDelivery()
 
-	log.Fatal(internal.ListenAndServe(grpcAddress, httpAddress, bd))
+	go server.ListenAndServeHTTPGateway(httpAddress, grpcAddress)
+	log.Fatal(server.ListenAndServeGRPCServer(grpcAddress, bd))
 }

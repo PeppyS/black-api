@@ -13,4 +13,4 @@ protofiles:
 		proto/*.proto
 
 run-local:
-	GRPC_PORT=50051 HTTP_PORT=8080 go run cmd/api/api.go
+	godotenv -f .env go run cmd/api/api.go

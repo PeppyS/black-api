@@ -1,0 +1,28 @@
+package server
+
+import (
+	"context"
+	"net/http"
+
+	"github.com/PeppyS/black-api/proto"
+	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"google.golang.org/grpc"
+)
+
+func ListenAndServeHTTPGateway(httpAddress string, grpcAddress string) error {
+	ctx := context.Background()
+
+	mux := runtime.NewServeMux()
+	dialOpts := []grpc.DialOption{grpc.WithInsecure()}
+	err := proto.RegisterBusinessServiceHandlerFromEndpoint(ctx, mux, grpcAddress, dialOpts)
+	if err != nil {
+		return err
+	}
+
+	server := &http.Server{
+		Addr:    httpAddress,
+		Handler: mux,
+	}
+
+	return server.ListenAndServe()
+}
