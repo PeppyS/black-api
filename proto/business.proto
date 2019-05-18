@@ -3,6 +3,20 @@ package proto;
 
 import "google/api/annotations.proto";
 
+service BusinessService {
+    rpc Get(GetBusinessRequest) returns (Business) {
+        option (google.api.http) = {
+            get: "/businesses/{id}"
+        };
+    }
+
+    rpc List(ListBusinessesRequest) returns (ListBusinessesResponse) {
+        option (google.api.http) = {
+            get: "/businesses"
+        };
+    }
+}
+
 message Business {
     message AddressDetails {
         string address_line_1 = 1;
@@ -18,16 +32,12 @@ message Business {
     AddressDetails address_details = 4;
 }
 
+message GetBusinessRequest {
+    string id = 1;
+}
+
 message ListBusinessesRequest {
 }
 message ListBusinessesResponse {
     repeated Business businesses = 1;
-}
-
-service BusinessService {
-    rpc List(ListBusinessesRequest) returns (ListBusinessesResponse) {
-        option (google.api.http) = {
-            get: "/businesses"
-        };
-    }
 }

@@ -2,7 +2,6 @@ package service
 
 import (
 	"database/sql"
-	"fmt"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -23,15 +22,20 @@ type Business struct {
 	AddressPostalCode string         `db:"address_postal_code"`
 }
 
-const TABLE_NAME = "business"
-
 func NewBusinessService(db *sqlx.DB) *BusinessService {
 	return &BusinessService{db}
 }
 
+func (bs *BusinessService) GetByID(ID string) (Business, error) {
+	business := Business{}
+	err := bs.db.Get(&business, "SELECT * FROM business WHERE id = $1", ID)
+
+	return business, err
+}
+
 func (bs *BusinessService) List() ([]Business, error) {
 	businesses := []Business{}
-	err := bs.db.Select(&businesses, fmt.Sprintf("SELECT * FROM %s", TABLE_NAME))
+	err := bs.db.Select(&businesses, "SELECT * FROM business")
 
 	return businesses, err
 }
