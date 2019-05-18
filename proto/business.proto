@@ -1,0 +1,33 @@
+syntax = "proto3";
+package proto;
+
+import "google/api/annotations.proto";
+
+message Business {
+    message AddressDetails {
+        string address_line_1 = 1;
+        string address_line_2 = 2;
+        string postal_code = 3;
+        string city = 4;
+        string state = 5;
+    }
+
+    int32 id = 1;
+    string display_name = 2;
+    string display_address = 3;
+    AddressDetails address_details = 4;
+}
+
+message ListBusinessesRequest {
+}
+message ListBusinessesResponse {
+    repeated Business businesses = 1;
+}
+
+service BusinessService {
+    rpc List(ListBusinessesRequest) returns (ListBusinessesResponse) {
+        option (google.api.http) = {
+            get: "/businesses"
+        };
+    }
+}
