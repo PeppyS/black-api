@@ -14,3 +14,12 @@ protofiles:
 
 run-local:
 	godotenv -f .env go run cmd/api/api.go
+
+build-image:
+	docker build -t xpeppy/black-api .
+
+run-image:
+	docker run -t -i --env-file .env -p 8080:8080 xpeppy/black-api
+
+import-businesses:
+	godotenv -f .env go run cmd/import/import_businesses.go

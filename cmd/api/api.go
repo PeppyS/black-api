@@ -21,6 +21,8 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	defer db.Close()
+
 	bs := businessService.NewBusinessService(db)
 	bd := businessDelivery.NewBusinessDelivery(bs)
 
