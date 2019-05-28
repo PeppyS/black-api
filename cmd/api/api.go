@@ -13,7 +13,7 @@ import (
 
 func main() {
 	grpcAddress := ":" + os.Getenv("GRPC_PORT")
-	httpAddress := ":" + os.Getenv("HTTP_PORT")
+	httpAddress := ":" + os.Getenv("PORT")
 	postgresDSN := os.Getenv("POSTGRES_DSN")
 
 	db, err := sqlx.Connect("postgres", postgresDSN)

@@ -22,4 +22,4 @@ RUN apt-get install -y ca-certificates
 COPY --from=builder /bin/api /bin/api
 
 # Start API
-ENTRYPOINT /bin/api
+CMD /bin/api
